@@ -230,6 +230,8 @@ module KnifeSolo
             channel.on_data do |ch, data|  # stdout
               if data =~ /^knife sudo password: /
                 ch.send_data("#{password}\n")
+              if data =~ /^Are you sure you want to continue connecting (yes/no)?/
+                ch.send_data("yes\n")
               else
                 Chef::Log.debug("#{command} stdout: #{data}")
                 ui.stdout << data if options[:streaming]
